@@ -26,6 +26,7 @@ views:
         - 'type == "trigger"'
         - 'type == "ecomap"'
         - 'type == "sensitive"'
+        - 'type == "handover"'
     order:
       - file.name
       - type
