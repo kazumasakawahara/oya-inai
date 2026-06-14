@@ -12,7 +12,19 @@
 .trash/
 
 # 機微情報の誤コミット防止：raw/ には実データ・個人情報を置く。
-# README と .gitkeep 以外はコミットしないこと。
+# 配布するのは各フォルダの README（構造の説明）だけ。中身は一切コミットしない。
 raw/*
 !raw/README.md
 !raw/.gitkeep
+!raw/聴き取り/
+!raw/WEB資料/
+!raw/AIチャット/
+!raw/書類・写真/
+raw/聴き取り/*
+raw/WEB資料/*
+raw/AIチャット/*
+raw/書類・写真/*
+!raw/聴き取り/README.md
+!raw/WEB資料/README.md
+!raw/AIチャット/README.md
+!raw/書類・写真/README.md
