@@ -1,0 +1,25 @@
+filters:
+  and:
+    - 'type == "person"'
+formulas:
+  role_label: 'if(person_role == "principal", "本人", if(person_role == "family", "家族", if(person_role == "supporter", "支援者", if(person_role == "professional", "専門職", "—"))))'
+properties:
+  file.name:
+    displayName: "ページ"
+  formula.role_label:
+    displayName: "立場"
+  diagnosis_summary:
+    displayName: "診断の要約"
+  current_living:
+    displayName: "現在の住まい"
+  file.mtime:
+    displayName: "最終更新"
+views:
+  - type: table
+    name: "本人一覧"
+    order:
+      - file.name
+      - formula.role_label
+      - diagnosis_summary
+      - current_living
+      - file.mtime

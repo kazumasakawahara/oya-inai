@@ -1,0 +1,28 @@
+filters:
+  and:
+    - 'type == "trigger"'
+formulas:
+  type_icon: 'if(trigger_type == "joy", "😊 喜び", "😣 苦痛")'
+properties:
+  file.name:
+    displayName: "ページ"
+  formula.type_icon:
+    displayName: "種類"
+  trigger_modality:
+    displayName: "感覚の種類"
+  intensity:
+    displayName: "強さ"
+  person_id:
+    displayName: "本人"
+views:
+  - type: table
+    name: "トリガー一覧"
+    groupBy:
+      property: trigger_type
+      direction: ASC
+    order:
+      - file.name
+      - formula.type_icon
+      - trigger_modality
+      - intensity
+      - person_id

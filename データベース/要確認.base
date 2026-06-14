@@ -1,0 +1,56 @@
+formulas:
+  days_since_update: '(now() - file.mtime).days.round(0)'
+properties:
+  file.name:
+    displayName: "ページ"
+  formula.days_since_update:
+    displayName: "最終更新からの日数"
+  person_id:
+    displayName: "本人"
+  last_validated:
+    displayName: "最終確認日"
+  protocol_domain:
+    displayName: "領域"
+  priority:
+    displayName: "優先度"
+  proposed_action:
+    displayName: "提案アクション"
+views:
+  - type: table
+    name: "更新が古い順（要確認）"
+    filters:
+      or:
+        - 'type == "person"'
+        - 'type == "trial"'
+        - 'type == "protocol"'
+        - 'type == "trigger"'
+        - 'type == "ecomap"'
+        - 'type == "sensitive"'
+    order:
+      - file.name
+      - type
+      - person_id
+      - formula.days_since_update
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: ASC
+  - type: table
+    name: "プロトコルの最終確認"
+    filters:
+      and:
+        - 'type == "protocol"'
+    order:
+      - file.name
+      - protocol_domain
+      - last_validated
+      - person_id
+  - type: table
+    name: "レビュー待ち"
+    filters:
+      and:
+        - 'type == "review"'
+    order:
+      - file.name
+      - priority
+      - proposed_action

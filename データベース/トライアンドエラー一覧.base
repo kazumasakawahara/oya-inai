@@ -1,0 +1,28 @@
+filters:
+  and:
+    - 'type == "trial"'
+formulas:
+  outcome_label: 'if(trial_outcome == "success", "✅ 成功", if(trial_outcome == "partial", "🟡 一部", if(trial_outcome == "failure", "🔴 失敗", "⚪ 未確定")))'
+properties:
+  file.name:
+    displayName: "ページ"
+  trial_date:
+    displayName: "日付"
+  formula.outcome_label:
+    displayName: "結果"
+  trial_subdomain:
+    displayName: "領域"
+  person_id:
+    displayName: "本人"
+views:
+  - type: table
+    name: "トライアンドエラー一覧"
+    order:
+      - trial_date
+      - file.name
+      - formula.outcome_label
+      - trial_subdomain
+      - person_id
+    sort:
+      - property: trial_date
+        direction: DESC
