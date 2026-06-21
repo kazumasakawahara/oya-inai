@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>かんたんスタートガイド｜親なき後・知識引き継ぎテンプレート</title>
+<style>
+  :root{
+    --bg:#f6f4ef; --card:#ffffff; --ink:#23201b; --sub:#5b554c;
+    --line:#e3ddd2; --accent:#2f6f6a; --accent-d:#1f4f4b;
+    --tip:#2f6f6a; --tip-bg:#e9f3f1; --warn:#9a5a12; --warn-bg:#fbf0df;
+    --badge:#2f6f6a; --shadow:0 1px 3px rgba(0,0,0,.06),0 6px 18px rgba(0,0,0,.05);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif;
+    font-size:17px; line-height:1.85; -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 18px 80px}
+  a{color:var(--accent-d)}
+  /* ヘッダー */
+  header.hero{
+    background:linear-gradient(160deg,#2f6f6a,#1f4f4b); color:#fff;
+    padding:38px 18px 30px; text-align:center;
+  }
+  header.hero .inner{max-width:860px;margin:0 auto}
+  header.hero h1{font-size:clamp(22px,5vw,30px); margin:.1em 0 .25em; line-height:1.4}
+  header.hero p{margin:.2em auto; max-width:42em; color:#eaf4f2; font-size:16px}
+  .eyebrow{display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35);
+    border-radius:999px; padding:3px 14px; font-size:13px; letter-spacing:.04em}
+  /* 目次ナビ */
+  nav.toc{
+    position:sticky; top:0; z-index:10; background:rgba(246,244,239,.95);
+    backdrop-filter:saturate(150%) blur(6px); border-bottom:1px solid var(--line);
+    margin:0 -18px 26px; padding:10px 18px;
+  }
+  nav.toc ul{list-style:none; display:flex; flex-wrap:wrap; gap:8px; margin:0 auto; padding:0; max-width:860px; justify-content:center}
+  nav.toc a{
+    display:inline-block; text-decoration:none; color:var(--accent-d);
+    background:var(--card); border:1px solid var(--line); border-radius:999px;
+    padding:7px 14px; font-size:14px; font-weight:700;
+  }
+  nav.toc a:hover{background:var(--tip-bg)}
+  /* セクション */
+  section{margin:0 0 18px}
+  h2{font-size:clamp(20px,4vw,25px); margin:34px 0 4px; padding-top:8px}
+  h2 .num{display:inline-grid; place-items:center; width:1.5em; height:1.5em; margin-inline-end:.4em;
+    background:var(--accent); color:#fff; border-radius:10px; font-size:.78em; vertical-align:.08em}
+  h3{font-size:18px; margin:24px 0 6px}
+  .lead{color:var(--sub); margin:.2em 0 1em}
+  /* ステップカード */
+  .steps{display:grid; gap:14px; margin:16px 0}
+  .step{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:16px 18px 14px; display:grid;
+    grid-template-columns:auto 1fr; gap:4px 14px; align-items:start;
+  }
+  .step .badge{
+    grid-row:1/3; grid-column:1; width:38px; height:38px; border-radius:50%; background:var(--badge); color:#fff;
+    display:grid; place-items:center; font-weight:800; font-size:18px;
+  }
+  .step > :not(.badge){ grid-column:2; min-width:0; }
+  .step h4{margin:.1em 0 .1em; font-size:17px}
+  .step p{margin:.15em 0; color:var(--ink)}
+  .step .hint{color:var(--sub); font-size:14.5px}
+  /* 図 */
+  figure{margin:14px 0; text-align:center}
+  figure svg{max-width:100%; height:auto; background:var(--card); border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--shadow)}
+  figcaption{color:var(--sub); font-size:13.5px; margin-top:6px}
+  /* コールアウト */
+  .callout{border-radius:12px; padding:12px 16px; margin:14px 0; border:1px solid; font-size:15.5px}
+  .callout p{margin:.2em 0}
+  .callout.tip{background:var(--tip-bg); border-color:#bfe0da}
+  .callout.tip strong{color:var(--tip)}
+  .callout.warn{background:var(--warn-bg); border-color:#eccfa0}
+  .callout.warn strong{color:var(--warn)}
+  /* プラットフォームの並び */
+  .cols{display:grid; gap:14px; grid-template-columns:1fr 1fr; margin:14px 0}
+  @media (max-width:620px){.cols{grid-template-columns:1fr}.step{grid-template-columns:auto 1fr}}
+  .platform{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow)}
+  .platform h3{margin-top:0; display:flex; align-items:center; gap:8px}
+  .pill{font-size:12.5px; background:var(--tip-bg); color:var(--accent-d); border:1px solid #c8e2dd; border-radius:999px; padding:2px 10px}
+  ol.tight{margin:.3em 0 .3em; padding-inline-start:1.3em}
+  ol.tight li{margin:.25em 0}
+  /* トラブルシュート（開閉） */
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin:10px 0; box-shadow:var(--shadow); overflow:hidden}
+  details>summary{
+    cursor:pointer; list-style:none; padding:14px 44px 14px 16px; font-weight:700; position:relative; font-size:16px;
+  }
+  details>summary::-webkit-details-marker{display:none}
+  details>summary::after{content:"＋"; position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    color:var(--accent); font-weight:800}
+  details[open]>summary::after{content:"−"}
+  details>summary:hover{background:var(--tip-bg)}
+  details .body{padding:0 16px 14px; border-top:1px solid var(--line)}
+  details .body p{margin:.6em 0}
+  .tag{display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--sub);
+    border-radius:6px; padding:1px 8px; margin-inline-end:6px; vertical-align:1px}
+  .tag.pc{background:#3a6ea5}.tag.sp{background:#7a4fa3}.tag.all{background:#2f6f6a}
+  /* フッター */
+  footer{margin-top:40px; padding-top:20px; border-top:1px solid var(--line); color:var(--sub); font-size:14.5px}
+  footer .next{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px 18px; box-shadow:var(--shadow); color:var(--ink)}
+  kbd{background:#efe9df; border:1px solid #d9d1c3; border-bottom-width:2px; border-radius:6px; padding:1px 7px; font-size:.92em; font-family:inherit}
+  .quiet{color:var(--sub)}
+  @media print{
+    nav.toc{display:none} body{background:#fff} .step,.platform,details,figure svg,footer .next{box-shadow:none}
+    details{break-inside:avoid} details>summary::after{display:none}
+    details>.body{display:block !important} details:not([open])>.body{display:block !important}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <span class="eyebrow">はじめての方へ・印刷もできます</span>
+    <h1>かんたんスタートガイド</h1>
+    <p>このページは、パソコンやスマホに不慣れな方でも、迷わず始められるようにつくった案内です。<br>
+       <strong>Obsidian をまだ入れていなくても</strong>、このページはそのまま読めます。</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" aria-label="目次">
+    <ul>
+      <li><a href="#install">① インストール手順（図解）</a></li>
+      <li><a href="#phone">② スマホでの開き方</a></li>
+      <li><a href="#trouble">③ こまったとき（Q&amp;A）</a></li>
+    </ul>
+  </nav>
+
+  <div class="callout tip">
+    <p>💡 <strong>このガイドの使い方</strong>：上の目次から知りたいところへ飛べます。全部を読む必要はありません。<strong>まずは①だけ</strong>で、始められます。</p>
+  </div>
+
+  <!-- ============ ① インストール ============ -->
+  <section id="install">
+    <h2><span class="num">1</span>インストール手順（図解）</h2>
+    <p class="lead">この仕組みは <strong>Obsidian（オブシディアン）</strong> という無料アプリで使います。やることは「アプリを入れる → フォルダを開く」の2つだけです。</p>
+
+    <figure aria-label="全体の流れ図">
+      <svg viewBox="0 0 760 150" role="img" aria-labelledby="flowtitle">
+        <title id="flowtitle">3つのステップ：ダウンロード → インストール → このフォルダを開く</title>
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#2f6f6a"/>
+          </marker>
+        </defs>
+        <g font-family="sans-serif" text-anchor="middle">
+          <rect x="20" y="35" width="200" height="80" rx="14" fill="#e9f3f1" stroke="#bfe0da"/>
+          <text x="120" y="60" font-size="30">⬇️</text>
+          <text x="120" y="92" font-size="15" font-weight="700" fill="#1f4f4b">1. ダウンロード</text>
+          <text x="120" y="110" font-size="12" fill="#5b554c">obsidian.md から無料</text>
+
+          <line x1="228" y1="75" x2="282" y2="75" stroke="#2f6f6a" stroke-width="3" marker-end="url(#arrow)"/>
+
+          <rect x="290" y="35" width="200" height="80" rx="14" fill="#e9f3f1" stroke="#bfe0da"/>
+          <text x="390" y="60" font-size="30">📥</text>
+          <text x="390" y="92" font-size="15" font-weight="700" fill="#1f4f4b">2. インストール</text>
+          <text x="390" y="110" font-size="12" fill="#5b554c">画面の案内に従うだけ</text>
+
+          <line x1="498" y1="75" x2="552" y2="75" stroke="#2f6f6a" stroke-width="3" marker-end="url(#arrow)"/>
+
+          <rect x="560" y="35" width="200" height="80" rx="14" fill="#fbf0df" stroke="#eccfa0"/>
+          <text x="660" y="60" font-size="30">📂</text>
+          <text x="660" y="92" font-size="15" font-weight="700" fill="#9a5a12">3. フォルダを開く</text>
+          <text x="660" y="110" font-size="12" fill="#5b554c">このテンプレを開く</text>
+        </g>
+      </svg>
+      <figcaption>大きな流れ。詳しい手順は下のステップカードに。</figcaption>
+    </figure>
+
+    <h3>パソコン（Windows / Mac）の場合</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="badge">1</div>
+        <h4>Obsidian をダウンロードする</h4>
+        <p>ブラウザで <strong>https://obsidian.md</strong> を開き、大きな「Download」ボタンを押します。無料です。</p>
+        <p class="hint">自分のパソコンが Windows か Mac かは自動で選ばれます。迷ったらそのまま進めてOK。</p>
+      </div>
+      <div class="step">
+        <div class="badge">2</div>
+        <h4>ダウンロードしたファイルを開いてインストール</h4>
+        <p>画面の案内（「次へ」「続ける」「同意する」）に従って進めます。難しい設定はありません。</p>
+        <p class="hint">Mac は、出てきた Obsidian のアイコンを「アプリケーション」フォルダへドラッグするだけのこともあります。</p>
+      </div>
+      <div class="step">
+        <div class="badge">3</div>
+        <h4>このテンプレのフォルダを分かりやすい場所に置く</h4>
+        <p>ダウンロードしたテンプレ一式（このファイルが入っているフォルダ）を、「書類」やデスクトップなど、自分で分かる場所に置きます。</p>
+        <p class="hint">GitHub から ZIP でダウンロードした場合は、先に<strong>ZIPを解凍（展開）</strong>してください。</p>
+      </div>
+      <div class="step">
+        <div class="badge">4</div>
+        <h4>Obsidian で「フォルダを Vault として開く」を選ぶ</h4>
+        <p>Obsidian を起動して、最初の画面で <strong>「フォルダを Vault として開く」</strong>（Open folder as vault）を選び、③で置いたフォルダを指定します。これで準備完了です。</p>
+      </div>
+    </div>
+
+    <figure aria-label="フォルダを Vault として開く画面のイメージ">
+      <svg viewBox="0 0 560 300" role="img" aria-labelledby="vaulttitle">
+        <title id="vaulttitle">Obsidian の起動画面イメージ：「フォルダを Vault として開く」を選ぶ</title>
+        <rect x="10" y="10" width="540" height="280" rx="16" fill="#ffffff" stroke="#e3ddd2"/>
+        <rect x="10" y="10" width="540" height="44" rx="16" fill="#2f6f6a"/>
+        <rect x="10" y="38" width="540" height="16" fill="#2f6f6a"/>
+        <circle cx="34" cy="32" r="6" fill="#ffffff" opacity=".85"/>
+        <circle cx="54" cy="32" r="6" fill="#ffffff" opacity=".55"/>
+        <circle cx="74" cy="32" r="6" fill="#ffffff" opacity=".55"/>
+        <text x="280" y="37" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#fff">Obsidian</text>
+        <text x="280" y="92" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#23201b">ようこそ — はじめ方を選んでください</text>
+
+        <rect x="70" y="120" width="420" height="46" rx="10" fill="#f6f4ef" stroke="#d9d1c3"/>
+        <text x="90" y="148" font-family="sans-serif" font-size="14" fill="#5b554c">＋ 新しい Vault を作成</text>
+
+        <rect x="70" y="178" width="420" height="52" rx="10" fill="#fbf0df" stroke="#9a5a12" stroke-width="2"/>
+        <text x="90" y="200" font-family="sans-serif" font-size="14.5" font-weight="800" fill="#9a5a12">📂 フォルダを Vault として開く</text>
+        <text x="90" y="219" font-family="sans-serif" font-size="12" fill="#5b554c">← これを押して、テンプレのフォルダを選ぶ</text>
+
+        <rect x="70" y="242" width="420" height="40" rx="10" fill="#f6f4ef" stroke="#d9d1c3"/>
+        <text x="90" y="266" font-family="sans-serif" font-size="14" fill="#5b554c">☁ 同期で開く（使いません）</text>
+      </svg>
+      <figcaption>この「フォルダを Vault として開く」を選ぶのがポイントです。</figcaption>
+    </figure>
+
+    <div class="callout tip">
+      <p>💡 <strong>「Vault（ヴォールト）」とは？</strong> Obsidian が扱うフォルダのことです。難しく考えず「メモの入れ物」と思ってください。</p>
+    </div>
+    <div class="callout tip">
+      <p>🛡 <strong>追加の設定（プラグイン）は基本いりません。</strong> 読む・書くだけなら最初のままで使えます。一覧表（データベース）が空白のときだけ、§③のQ&amp;Aを見てください。</p>
+    </div>
+
+    <h3>開いたら、次にすること</h3>
+    <p>Obsidian の左側にファイルの一覧が出ます。まず次の順で開いてみてください。</p>
+    <ol class="tight">
+      <li><strong>はじめに</strong> — この仕組みが何のためのものか</li>
+      <li><strong>つかいかた → もくじ</strong> — どのページをどの順で読むかの地図</li>
+      <li><strong>記入例（あおいさん）</strong> — 書き方の見本</li>
+    </ol>
+  </section>
+
+  <!-- ============ ② スマホ ============ -->
+  <section id="phone">
+    <h2><span class="num">2</span>スマホ・タブレットでの開き方</h2>
+    <p class="lead">スマホでも読み書きできます。ただし<strong>最初の設定だけはパソコンが楽</strong>です。「外出先で見る・少し書き足す」用途にスマホはとても便利です。</p>
+
+    <div class="cols">
+      <div class="platform">
+        <h3>📱 iPhone / iPad <span class="pill">iOS</span></h3>
+        <ol class="tight">
+          <li>App Store で <strong>「Obsidian」</strong> を検索してインストール</li>
+          <li>テンプレのフォルダを <strong>iCloud Drive</strong>（または「ファイル」アプリの中）に置く</li>
+          <li>Obsidian を開き、<strong>「フォルダを Vault として開く」</strong>でそのフォルダを選ぶ</li>
+        </ol>
+      </div>
+      <div class="platform">
+        <h3>🤖 Android <span class="pill">Android</span></h3>
+        <ol class="tight">
+          <li>Google Play で <strong>「Obsidian」</strong> を検索してインストール</li>
+          <li>テンプレのフォルダを端末内（または共有ストレージ）に置く</li>
+          <li>Obsidian を開き、<strong>「フォルダを開く」</strong>でそのフォルダを選ぶ</li>
+        </ol>
+      </div>
+    </div>
+
+    <figure aria-label="スマホ画面のイメージ">
+      <svg viewBox="0 0 560 250" role="img" aria-labelledby="phonetitle">
+        <title id="phonetitle">スマホでフォルダを開くイメージ</title>
+        <!-- phone frame -->
+        <rect x="40" y="20" width="150" height="210" rx="22" fill="#ffffff" stroke="#23201b" stroke-width="3"/>
+        <rect x="78" y="28" width="74" height="9" rx="5" fill="#23201b"/>
+        <rect x="56" y="52" width="118" height="26" rx="7" fill="#2f6f6a"/>
+        <text x="115" y="70" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#fff">Obsidian</text>
+        <rect x="56" y="90" width="118" height="34" rx="8" fill="#fbf0df" stroke="#9a5a12"/>
+        <text x="115" y="105" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#9a5a12">📂 フォルダを</text>
+        <text x="115" y="118" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#9a5a12">Vault として開く</text>
+        <rect x="56" y="132" width="118" height="22" rx="6" fill="#f6f4ef" stroke="#d9d1c3"/>
+        <text x="115" y="147" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5b554c">新しい Vault を作成</text>
+        <!-- arrow + note -->
+        <g font-family="sans-serif">
+          <line x1="200" y1="107" x2="250" y2="107" stroke="#2f6f6a" stroke-width="3" marker-end="url(#arrow)"/>
+          <text x="265" y="80" font-size="14" font-weight="700" fill="#1f4f4b">パソコンと同じで、</text>
+          <text x="265" y="103" font-size="14" font-weight="700" fill="#1f4f4b">「フォルダを Vault</text>
+          <text x="265" y="126" font-size="14" font-weight="700" fill="#1f4f4b">として開く」を選ぶだけ。</text>
+          <text x="265" y="158" font-size="12.5" fill="#5b554c">フォルダの“置き場所”が</text>
+          <text x="265" y="176" font-size="12.5" fill="#5b554c">iCloud／ファイルアプリに</text>
+          <text x="265" y="194" font-size="12.5" fill="#5b554c">なる点だけが違います。</text>
+        </g>
+      </svg>
+      <figcaption>選ぶボタンはパソコンと同じ。違うのは「フォルダをどこに置くか」だけ。</figcaption>
+    </figure>
+
+    <div class="callout warn">
+      <p>⚠️ <strong>クラウド同期と機微情報の注意</strong>：iCloud などでフォルダを同期すると便利ですが、本名や診断書など機微な情報を入れた <kbd>raw/</kbd> フォルダも一緒に上がります。<strong>共有相手・公開範囲をしぼり</strong>、心配なときは <kbd>raw/</kbd> をスマホに置かない運用にしてください（→ 「プライバシーの扱い方」）。</p>
+    </div>
+    <div class="callout tip">
+      <p>💡 <strong>おすすめの分担</strong>：じっくり書くのはパソコン、外出先や支援の合間に見る・一言足すのはスマホ。同じフォルダを共有すれば、どちらからでも同じ記録を見られます。</p>
+    </div>
+  </section>
+
+  <!-- ============ ③ トラブルシュート ============ -->
+  <section id="trouble">
+    <h2><span class="num">3</span>こまったとき（Q&amp;A）</h2>
+    <p class="lead">よくあるつまずきと、その直し方です。見出しを押すと答えが開きます。</p>
+
+    <details>
+      <summary><span class="tag all">共通</span>どこから始めればいいか分からない</summary>
+      <div class="body">
+        <p>まず <strong>「はじめに」</strong> を開き、<strong>「引き継ぎ1枚」</strong>（30分でできる最短の入口）から書いてみてください。全部を完璧にする必要はありません。<strong>分かるところだけ</strong>で立派なスタートです。</p>
+        <p>読む順番に迷ったら、<strong>つかいかた → もくじ</strong> がマニュアル全体の地図になっています。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag pc">PC/スマホ</span>一覧表（データベース）が空白・表示されない</summary>
+      <div class="body">
+        <p>一覧表は Obsidian の標準機能 <strong>「Bases」</strong> を使っています。<strong>古いバージョンの Obsidian では表示されません。</strong></p>
+        <p>👉 <strong>Obsidian を最新版に更新</strong>してください（パソコンは「設定 → バージョン情報 → 更新を確認」、スマホはストアでアップデート）。更新後にもう一度 Vault を開くと表が出ます。</p>
+        <p>それでも出ないときは、表のページを一度閉じて開き直すか、Obsidian を再起動してください。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag all">共通</span>青い文字のリンクを押しても飛べない／「リンクが見つかりません」と出る</summary>
+      <div class="body">
+        <p>そのリンク先のページが、まだ作られていない場合に起きます（これから自分で書くページなど）。<strong>不具合ではありません。</strong></p>
+        <p>見本（記入例）のページは最初から入っています。リンクが切れて見えるときは、ファイル名が少し違うだけのこともあるので、左の一覧から目的のページを直接さがしてみてください。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag all">共通</span>グラフ表示の点と線がごちゃごちゃして読めない</summary>
+      <div class="body">
+        <p>グラフ（点と線のつながり図）は「おまけ」の機能です。<strong>読めなくても困りません。</strong> 記録が増えるほど見やすくなります。</p>
+        <p>気になるときは、グラフ画面右上の設定で、表示するページの種類をしぼると見やすくなります。まずは無視して、記録づくりを優先して大丈夫です。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag all">共通</span>文字が □ や ? に化ける／うまく表示されない</summary>
+      <div class="body">
+        <p>このテンプレの文字コードは <strong>UTF-8</strong> です。Obsidian で開いていれば化けません。</p>
+        <p>もし他のアプリ（古いメモ帳など）で開いて化けるときは、<strong>Obsidian で開く</strong>か、開くときの文字コードを「UTF-8」に指定してください。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag sp">スマホ</span>スマホでフォルダを選べない／見つからない</summary>
+      <div class="body">
+        <p>フォルダの<strong>置き場所</strong>が原因のことが多いです。iPhone なら「ファイル」アプリ（iCloud Drive 内）に、Android なら端末内の分かりやすい場所にフォルダを置いてから、Obsidian の「フォルダを開く」で選んでください。</p>
+        <p>最初の設定がうまくいかないときは、<strong>いったんパソコンで開いて設定</strong>し、同じフォルダをスマホから共有する方法が確実です。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag all">共通</span>うっかり機微な情報をAIに送ってしまいそうで不安</summary>
+      <div class="body">
+        <p>大切な感覚です。<strong>本名・性や触法に関すること・詳しい医療情報は、そのままクラウドのAIに送らない</strong>のが原則です。</p>
+        <p>送る前に <strong>仮名（P_001 など）に置きかえる</strong>、機微な部分は要約・抽象化する、迷ったら送らない。くわしくは「AIと一緒に使う場合」「プライバシーの扱い方」を必ず読んでください。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag all">共通</span>書いた記録が消えないか心配／バックアップは？</summary>
+      <div class="body">
+        <p>記録はただのテキストファイル（Markdown）です。<strong>Obsidian が将来なくなっても、メモ帳などでそのまま読めます。</strong> 安心して長く保管できます。</p>
+        <p>万一に備え、<strong>バックアップは2か所以上</strong>（例：パソコン＋暗号化したUSB）を習慣にしてください。くわしくは「記録の保管と引き継ぎ」を参照。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag all">共通</span>うまくいかない・もっと知りたい</summary>
+      <div class="body">
+        <p>この仕組みの考え方は <strong>「purpose」</strong> に、操作のくわしい手引きは <strong>「つかいかた」</strong> の各ページにあります。困ったら「つかいかた → もくじ」から目的のページを探してください。</p>
+        <p>判断に迷う情報（被害・触法・深刻な対人トラブルなど）は、ひとりで抱えず、<strong>相談支援専門員・医師・弁護士などの専門職に相談</strong>してください。</p>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <div class="next">
+      <strong>次の一歩 →</strong> Obsidian でこのフォルダを開いたら、まず <strong>「はじめに」</strong> を読み、<strong>「引き継ぎ1枚」</strong>から書いてみてください。読む順番は <strong>「つかいかた → もくじ」</strong> にまとめてあります。
+    </div>
+    <p class="quiet" style="margin-top:18px">
+      この仕組みは、お金では買えないものを残すための装置です。本人がこの世界で笑顔でいられる時間を、一秒でも長く確保するために。<br>
+      ライセンス：CC BY-SA 4.0 ／ 利用者が記入する本人の個人情報・機微情報はライセンスの対象外です。
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
